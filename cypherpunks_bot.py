@@ -50,7 +50,7 @@ try:
             twitter.update_status(status=tweet)
             print("Tweeted!")"""
             
-            #toot(toot) 
+            toot(toot) 
             print(toot)
             print(len(toot))
 
