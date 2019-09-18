@@ -23,50 +23,49 @@ def getQuote(text, url):
     return quote
 
 try:
-    with open('quotes', 'r+') as tweetfile:
-        buff = tweetfile.readlines()
+    with open('quotes', 'r+', newline='\r') as tootfile:
+        buff = tootfile.readlines()
 
     for line in buff[:]:
        
-        line = line.strip(r'\n')
+        line = line.strip(r'\r')
         link = getUrl(line)
         try:
             link is not None
             quote = getQuote(line, link)
             total_length = len(link) + len(quote)
             if total_length > 500:
-                quote = quote[:(total_length-len(link))]
-            tweet = quote + link
+                quote = quote[:(499-len(link))] + ' '
+            toot = quote + link
 
         except:
-            quote = line
-            tweet = quote.strip('/n')
-            tweet_length = len(tweet)
-            if tweet_length > 500:
-                tweet = tweet[:(total_length-len(link)]
+            toot = line
+            toot_length = len(toot)
+            if toot_length > 500:
+                toot = toot[:500]
 
-        if tweet_length <= 500:
+        if len(toot) > 2:
             """print("Tweeting...")
             print(f"{tweet}")
             twitter.update_status(status=tweet)
             print("Tweeted!")"""
             
-            toot(tweet) 
+            #toot(toot) 
+            print(toot)
+            print(len(toot))
 
             print("Tooted!")
 
-            with open('quotes', 'w') as tweetfile:
+            with open('quotes', 'w') as tootfile:
                 buff.remove(line)
-                tweetfile.writelines(buff)
-            time.sleep(21600)
+                tootfile.writelines(buff)
+            time.sleep(21)
         else:
             print("Skipped line - some issue occurred")
-            with open('quotes', 'w') as tweetfile:
+            with open('quotes', 'w') as tootfile:
                 buff.remove(line)
-                tweetfile.writelines(buff)
+                tootfile.writelines(buff)
             continue
 
-    print("No more lines to tweet...")
-
-"""except TwythonError as e:
-    print(e)"""
+except:
+    print("Something wrong happened")
