@@ -33,13 +33,17 @@ try:
         try:
             link is not None
             quote = getQuote(line, link)
+            total_length = len(link) + len(quote)
+            if total_length > 500:
+                quote = quote[:(total_length-len(link))]
             tweet = quote + link
-            tweet_length = len(tweet)
 
         except:
             quote = line
             tweet = quote.strip('/n')
             tweet_length = len(tweet)
+            if tweet_length > 500:
+                tweet = tweet[:(total_length-len(link)]
 
         if tweet_length <= 500:
             """print("Tweeting...")
@@ -64,5 +68,5 @@ try:
 
     print("No more lines to tweet...")
 
-except TwythonError as e:
-    print(e)
+"""except TwythonError as e:
+    print(e)"""
